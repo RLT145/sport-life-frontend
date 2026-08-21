@@ -18,9 +18,9 @@ export default function Admin() {
 
   const cargarDatos = async () => {
     try {
-      const resP = await fetch('https://sportlife-api-m3yg.onrender.com');
+      const resP = await fetch('https://sportlife-api-m3yg.onrender.com/productos');
       setProductos(await resP.json());
-      const resO = await fetch('https://sportlife-api-m3yg.onrender.com');
+      const resO = await fetch('https://sportlife-api-m3yg.onrender.com/ordenes');
       setOrdenes(await resO.json());
     } catch (e) { console.error(e); }
   };
