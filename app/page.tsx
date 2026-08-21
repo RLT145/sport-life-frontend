@@ -67,7 +67,7 @@ export default function Admin() {
     const method = idEdicion ? 'PUT' : 'POST';
 
     const res = await fetch(url, { method, body: formData });
-    if (res.ok) {
+    if (res.ok) 
       alert(idEdicion ? 'Producto actualizado' : 'Producto guardado');
       cancelarEdicion();
       cargarDatos();
@@ -191,7 +191,7 @@ export default function Admin() {
             {productos.map(p => (
               <div key={p.id} className="border p-4 rounded-xl bg-gray-50 flex flex-col justify-between">
                 <div>
-                  <img src={p.imagenUrl} className="w-full h-32 object-cover rounded mb-2 border border-gray-200" />
+                  <img src={p.imagenUrl?.includes('http') ? p.imagenUrl.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : `https://sportlife-api-m3yg.onrender.com${p.imagenUrl}`} className="w-full h-32 object-cover rounded mb-2 border border-gray-200" />
                   <h3 className="font-bold text-gray-900 truncate">{p.nombre}</h3>
                   <p className="text-sm text-gray-500">{p.marca} | Q{p.precio}</p>
                   <p className="text-xs text-gray-400 font-bold mt-1">

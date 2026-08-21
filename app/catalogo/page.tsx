@@ -154,7 +154,7 @@ export default function Catalogo() {
                     <div key={p.id} onClick={() => { setProductoSeleccionado(p); setImagenActiva(p.imagenes?.[0] || p.imagenUrl); }} className="group bg-black/60 backdrop-blur-sm border border-zinc-800/80 p-5 cursor-pointer hover:border-red-600/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                       <div className="absolute top-4 right-4 z-10 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-1 tracking-widest">{p.genero}</div>
                       <div className="aspect-square bg-zinc-950 mb-5 overflow-hidden flex items-center justify-center">
-                        <img src={p.imagenUrl} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
+                        <img src={p.imagenUrl.startsWith('http') ? p.imagenUrl : `https://sportlife-api-m3yg.onrender.com${p.imagenUrl}`} className="w-full h-full object-cover grayscale-0" />
                       </div>
                       <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-1">{p.categoria}</span>
                       <h5 className="font-bold uppercase tracking-widest text-sm line-clamp-1">{p.nombre}</h5>
@@ -179,7 +179,7 @@ export default function Catalogo() {
       <div className="flex flex-col md:flex-row gap-12">
         <div className="w-full md:w-1/2">
           <div className="aspect-square bg-black border border-zinc-900 p-2">
-            <img src={imagenActiva} className="w-full h-full object-cover" />
+            <img src={imagenActiva.startsWith('http') ? imagenActiva : `https://sportlife-api-m3yg.onrender.com${imagenActiva}`} className="w-full h-full object-cover" />
           </div>
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2 scrollbar-hide">
             {(Array.isArray(productoSeleccionado.imagenes) 
@@ -188,7 +188,7 @@ export default function Catalogo() {
                 ? JSON.parse(productoSeleccionado.imagenes) 
                 : [productoSeleccionado.imagenUrl]
             ).map((img: string | SetStateAction<null> | Blob | undefined, i: Key | null | undefined) => (
-              <img key={i} src={img} onClick={() => setImagenActiva(img)} className={`w-20 h-20 cursor-pointer border-2 transition-all ${imagenActiva === img ? 'border-red-600 scale-105' : 'border-zinc-800 opacity-50 hover:opacity-100'}`} />
+              <img key={i} src={img.startsWith('http') ? img : `https://sportlife-api-m3yg.onrender.com${img}`} onClick={() => setImagenActiva(img)} className="w-20 h-20 object-cover cursor-pointer border-2 border-transparent hover:border-red-600" />
             ))}
           </div>
         </div>
