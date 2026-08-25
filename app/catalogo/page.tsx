@@ -154,7 +154,7 @@ export default function Catalogo() {
                     <div key={p.id} onClick={() => { setProductoSeleccionado(p); setImagenActiva(p.imagenes?.[0] || p.imagenUrl); }} className="group bg-black/60 backdrop-blur-sm border border-zinc-800/80 p-5 cursor-pointer hover:border-red-600/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                       <div className="absolute top-4 right-4 z-10 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-1 tracking-widest">{p.genero}</div>
                       <div className="aspect-square bg-zinc-950 mb-5 overflow-hidden flex items-center justify-center">
-                        <img src={p.imagenUrl.startsWith('http') ? p.imagenUrl : `https://sportlife-api-m3yg.onrender.com${p.imagenUrl}`} className="w-full h-full object-cover grayscale-0" />
+                        src={producto.imagen.includes('localhost') ? producto.imagen.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : producto.imagen.startsWith('http') ? producto.imagen : `https://sportlife-api-m3yg.onrender.com${producto.imagen}`}
                       </div>
                       <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-1">{p.categoria}</span>
                       <h5 className="font-bold uppercase tracking-widest text-sm line-clamp-1">{p.nombre}</h5>
@@ -179,7 +179,7 @@ export default function Catalogo() {
       <div className="flex flex-col md:flex-row gap-12">
         <div className="w-full md:w-1/2">
           <div className="aspect-square bg-black border border-zinc-900 p-2">
-            <img src={imagenActiva.startsWith('http') ? imagenActiva : `https://sportlife-api-m3yg.onrender.com${imagenActiva}`} className="w-full h-full object-cover" />
+            src={imagenActiva.includes('localhost') ? imagenActiva.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : imagenActiva.startsWith('http') ? imagenActiva : `https://sportlife-api-m3yg.onrender.com${imagenActiva}`}
           </div>
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2 scrollbar-hide">
             {(Array.isArray(productoSeleccionado.imagenes) 
