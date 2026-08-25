@@ -52,7 +52,8 @@ export default function Admin() {
     e.preventDefault();
     const formData = new FormData();
     formData.append('nombre', nombre);
-    formData.append('marca', marca);
+    const marcaLimpia = marca.trim().toUpperCase();
+    formData.append('marca', marcaLimpia);
     formData.append('genero', genero);
     
     const categoriaFinal = nuevaCategoria.trim() !== '' ? nuevaCategoria.trim() : categoria;
