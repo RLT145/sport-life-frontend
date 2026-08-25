@@ -67,7 +67,7 @@ export default function Admin() {
     const method = idEdicion ? 'PUT' : 'POST';
 
     const res = await fetch(url, { method, body: formData });
-    if (res.ok) 
+    if (res.ok) {
       alert(idEdicion ? 'Producto actualizado' : 'Producto guardado');
       cancelarEdicion();
       cargarDatos();
