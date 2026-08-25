@@ -154,8 +154,8 @@ export default function Catalogo() {
                     <div key={p.id} onClick={() => { setProductoSeleccionado(p); setImagenActiva(p.imagenes?.[0] || p.imagenUrl); }} className="group bg-black/60 backdrop-blur-sm border border-zinc-800/80 p-5 cursor-pointer hover:border-red-600/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                       <div className="absolute top-4 right-4 z-10 bg-red-600 text-white text-[9px] font-black uppercase px-2 py-1 tracking-widest">{p.genero}</div>
                       <div className="aspect-square bg-zinc-950 mb-5 overflow-hidden flex items-center justify-center">
-            <img 
-              src={p.imagen?.includes('localhost') ? p.imagen.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : p.imagen?.startsWith('http') ? p.imagen : `https://sportlife-api-m3yg.onrender.com${p.imagen}`}
+           <img 
+              src={p.imagenUrl?.includes('localhost') ? p.imagenUrl.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : p.imagenUrl?.startsWith('http') ? p.imagenUrl : `https://sportlife-api-m3yg.onrender.com${p.imagenUrl}`}
               className="w-full h-full object-cover"
               alt={p.nombre}
             />
@@ -195,9 +195,15 @@ export default function Catalogo() {
               : typeof productoSeleccionado.imagenes === 'string' 
                 ? JSON.parse(productoSeleccionado.imagenes) 
                 : [productoSeleccionado.imagenUrl]
-            ).map((img: string | SetStateAction<null> | Blob | undefined, i: Key | null | undefined) => (
-              <img key={i} src={img.startsWith('http') ? img : `https://sportlife-api-m3yg.onrender.com${img}`} onClick={() => setImagenActiva(img)} className="w-20 h-20 object-cover cursor-pointer border-2 border-transparent hover:border-red-600" />
-            ))}
+            ).map((img: string, i: number) => (
+            <img 
+              key={i} 
+              src={img.includes('localhost') ? img.replace('http://localhost:3000', 'https://sportlife-api-m3yg.onrender.com') : img.startsWith('http') ? img : `https://sportlife-api-m3yg.onrender.com${img}`} 
+              onClick={() => setImagenActiva(img)} 
+              className="w-16 h-16 object-cover cursor-pointer border border-zinc-700 hover:border-red-600 transition"
+              alt="Miniatura"
+            />
+          ))}
           </div>
         </div>
         
