@@ -18,7 +18,6 @@ export default function Catalogo() {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
-  const window.open(`https://wa.me/50254869449?text=${msg}`, '_blank');
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -38,7 +37,7 @@ export default function Catalogo() {
   const agregarAlCarrito = (p: never, tallaElegida: string) => {
     setCarrito([...carrito, { ...p, talla: tallaElegida }]);
     setProductoSeleccionado(null); setTallaSeleccionada('');
-    alert(`✅ "${p.nombre}" añadido al carrito.`);
+    alert(`🛍️ "${p.nombre}" añadido al carrito.`);
   };
 
   const eliminarDelCarrito = (index: number) => setCarrito(carrito.filter((_, i) => i !== index));
@@ -67,7 +66,7 @@ export default function Catalogo() {
     
     msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
 
-    window.open(`https://wa.me/${miNumeroWhatsapp}?text=${msg}`, '_blank');
+    window.open(`https://wa.me/${50254869449}?text=${msg}`, '_blank');
     setCarrito([]); 
     localStorage.removeItem('carrito'); 
     setMostrarCarrito(false);
