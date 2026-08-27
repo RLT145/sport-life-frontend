@@ -51,14 +51,17 @@ export default function Catalogo() {
       body: JSON.stringify({ cliente: nombre, telefono, direccion, carrito, total: carrito.reduce((sum, p) => sum + p.precio, 0) })
     });
     const data = await res.json();
-    if (data.success) {
-      let codigoPedido = data.codigo || data.trackingCode || data.ordenId || "SL-0000";
+console.log("Respuesta del servidor:", data);
+
+// Atrapamos el código sin importar cómo lo mande el backend
+let codigoPedido = data?.codigo || data?.trackingCode || data?.ordenId || data?.id || "SL-0000";
+
 let msg = `*SPORT LIFE - NUEVO PEDIDO #${codigoPedido}* 🛍️%0A%0A👤 *CLIENTE:* ${nombre}%0A📱 *TEL:* ${telefono}%0A📍 *DIRECCIÓN:* ${direccion}%0A%0A🛒 *PRODUCTOS:*%0A`;
-      carrito.forEach((i, idx) => msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.precio}%0A`);
-      msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
-      window.open(`https://wa.me/${miNumeroWhatsApp}?text=${msg}`, '_blank');
-      setCarrito([]); localStorage.removeItem('carrito'); setMostrarCarrito(false);
-    }
+carrito.forEach((i, idx) => msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.precio}%0A`);
+msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
+
+window.open(`https://wa.me/${miNumeroWhatsapp}?text=${msg}`, '_blank');
+setCarrito([]); localStorage.removeItem('carrito'); setMostrarCarrito(false);
   };
 
   let prodProcesados = productos.filter(p => p.nombre.toLowerCase().includes(busqueda.toLowerCase()));
