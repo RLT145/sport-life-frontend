@@ -61,9 +61,14 @@ carrito.forEach((i, idx) => msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.
 msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
 
 window.open(`https://wa.me/${miNumeroWhatsapp}?text=${msg}`, '_blank');
-setCarrito([]); localStorage.removeItem('carrito'); setMostrarCarrito(false);
-  };
-
+    setCarrito([]); 
+    localStorage.removeItem('carrito'); 
+    setMostrarCarrito(false);
+  } catch (error) {
+    console.error("Error al enviar el pedido:", error);
+    alert("Hubo un error al procesar el pedido. Inténtalo de nuevo.");
+  }
+};
   let prodProcesados = productos.filter(p => p.nombre.toLowerCase().includes(busqueda.toLowerCase()));
   
   if (generoFiltro !== 'TODOS') {
