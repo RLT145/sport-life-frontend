@@ -52,7 +52,8 @@ export default function Catalogo() {
     });
     const data = await res.json();
     if (data.success) {
-      let msg = `*SPORT LIFE - NUEVO PEDIDO #${data.codigo}* ... ⬛🟥%0A%0A👤 *CLIENTE:* ${nombre}%0A📱 *TEL:* ${telefono}%0A📍 *DIR:* ${direccion}%0A%0A--- *DETALLE* ---%0A`;
+      let codigoPedido = data.codigo || data.trackingCode || data.ordenId || "SL-0000";
+let msg = `*SPORT LIFE - NUEVO PEDIDO #${codigoPedido}* 🛍️%0A%0A👤 *CLIENTE:* ${nombre}%0A📱 *TEL:* ${telefono}%0A📍 *DIRECCIÓN:* ${direccion}%0A%0A🛒 *PRODUCTOS:*%0A`;
       carrito.forEach((i, idx) => msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.precio}%0A`);
       msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
       window.open(`https://wa.me/${miNumeroWhatsApp}?text=${msg}`, '_blank');
