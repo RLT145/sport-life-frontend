@@ -18,7 +18,7 @@ export default function Catalogo() {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
-  const miNumeroWhatsApp = "50259751910";
+  const miNumeroWhatsApp = "50254869449";
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
