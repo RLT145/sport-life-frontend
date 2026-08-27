@@ -44,26 +44,34 @@ export default function Catalogo() {
   const eliminarDelCarrito = (index: number) => setCarrito(carrito.filter((_, i) => i !== index));
 
   const finalizarPedido = async () => {
-    if (!nombre || !telefono || !direccion) return alert('Completa los datos de envío.');
+  if (!nombre || !telefono || !direccion) return alert('Completa los datos de envío.');
+  
+  try {
     const res = await fetch('https://sportlife-api-m3yg.onrender.com/ordenes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cliente: nombre, telefono, direccion, carrito, total: carrito.reduce((sum, p) => sum + p.precio, 0) })
+      body: JSON.stringify({ cliente: nombre, telefono, direccion, carrito, total: carrito.reduce((sum, p) => sum + p.precio, 0) }),
     });
+
     const data = await res.json();
-console.log("Respuesta del servidor:", data);
+    console.log("Respuesta completa del backend:", data);
 
-// Atrapamos el código sin importar cómo lo mande el backend
-let codigoPedido = data?.codigo || data?.trackingCode || data?.ordenId || data?.id || "SL-0000";
+    // Extraemos el código con seguridad, buscando cualquier nombre posible
+    const codigoPedido = data?.codigo || data?.trackingCode || data?.ordenId || data?.id || "SL-0000";
 
-let msg = `*SPORT LIFE - NUEVO PEDIDO #${codigoPedido}* 🛍️%0A%0A👤 *CLIENTE:* ${nombre}%0A📱 *TEL:* ${telefono}%0A📍 *DIRECCIÓN:* ${direccion}%0A%0A🛒 *PRODUCTOS:*%0A`;
-carrito.forEach((i, idx) => msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.precio}%0A`);
-msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
+    let msg = `*SPORT LIFE - NUEVO PEDIDO #${codigoPedido}* 🛍️%0A%0A👤 *CLIENTE:* ${nombre}%0A📱 *TEL:* ${telefono}%0A📍 *DIRECCIÓN:* ${direccion}%0A%0A🛒 *PRODUCTOS:*%0A`;
+    
+    carrito.forEach((i, idx) => {
+      msg += `${idx + 1}. ${i.nombre} - ${i.talla} - Q${i.precio}%0A`;
+    });
+    
+    msg += `%0A💰 *TOTAL: Q${carrito.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}*`;
 
-window.open(`https://wa.me/${miNumeroWhatsapp}?text=${msg}`, '_blank');
+    window.open(`https://wa.me/${miNumeroWhatsapp}?text=${msg}`, '_blank');
     setCarrito([]); 
     localStorage.removeItem('carrito'); 
     setMostrarCarrito(false);
+
   } catch (error) {
     console.error("Error al enviar el pedido:", error);
     alert("Hubo un error al procesar el pedido. Inténtalo de nuevo.");
