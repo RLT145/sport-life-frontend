@@ -193,8 +193,8 @@ Ropa deportiva, accesorios y mas.</p>
 
         {/* MODAL DEL PRODUCTO */}
 {productoSeleccionado && (
-  <div className="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 overflow-y-auto">
-    <div className="bg-zinc-950/90 border border-zinc-800 w-full max-w-5xl relative p-6 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+  <div className="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-start md:items-center justify-center p-4 pt-16 md:pt-4 overflow-y-auto">
+  <div className="bg-zinc-950/90 border border-zinc-800 w-full max-w-5xl relative p-6 md:p-12 shadow-[0_0_50px_rgba(0,0,0,0.8)] md:my-auto mb-10 md:mb-0">
       <button onClick={() => setProductoSeleccionado(null)} className="absolute top-6 right-6 text-zinc-500 hover:text-white text-3xl transition-colors z-10">✕</button>
       
       <div className="flex flex-col md:flex-row gap-12">
