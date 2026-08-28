@@ -117,7 +117,8 @@ export default function Catalogo() {
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-[0.1em] drop-shadow-2xl">
             SPORT<span className="text-red-600">LIFE</span>
           </h1>
-          <p className="mt-6 text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">Rinde al máximo, viste con estilo</p>
+          <p className="mt-6 text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">VISTIENDO SIEMPRE A LOS MEJORES
+Ropa deportiva, accesorios y mas.</p>
         </section>
 
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-4">
