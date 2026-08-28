@@ -299,6 +299,7 @@ Ropa deportiva, accesorios y mas.</p>
             <a href="https://www.facebook.com/share/14tyntTFCbX/" target="_blank" className="hover:text-blue-500 transition-colors">Facebook</a>
             <a href="https://www.instagram.com/sportlife_p" target="_blank" className="hover:text-pink-500 transition-colors">Instagram</a>
             <a href="https://www.tiktok.com/@sportlife_kiche" target="_blank" className="hover:text-white transition-colors">TikTok</a>
+            <a href="https://wa.me/50254869449" target="_blank" className="hover:text-green-500 transition-colors">WhatsApp</a>
           </div>
           <p className="mt-8 text-zinc-800 text-[10px] uppercase tracking-[0.3em]">© {new Date().getFullYear()} SPORT LIFE</p>
         </footer>
