@@ -25,6 +25,16 @@ export default function Catalogo() {
     fetch('https://sportlife-api-m3yg.onrender.com/productos').then(res => res.json()).then(data => setProductos(data));
     const g = localStorage.getItem('carrito');
     if (g) setCarrito(JSON.parse(g));
+
+    fetch('https://sportlife-api-m3yg.onrender.com/anuncios')
+    .then(res => res.json())
+    .then(data => {
+      // Si hay anuncios en la base de datos, guardamos el más reciente (el primero)
+      if (data && data.length > 0) {
+        setAnuncioActivo(data[0]);
+      }
+    })
+    .catch(error => console.error("Error cargando anuncios:", error));
   }, []);
 
   useEffect(() => { 
@@ -113,6 +123,35 @@ export default function Catalogo() {
           </button>
         </header>
 
+        {/* 📢 BANNER DINÁMICO (Solo se muestra si hay un anuncio activo) */}
+{anuncioActivo && (
+  <div className="w-full max-w-7xl mx-auto px-4 mb-10 mt-4 animate-fade-in">
+    <div className="w-full h-48 md:h-80 bg-zinc-900 rounded-2xl overflow-hidden relative border border-zinc-800 flex items-center justify-center group shadow-2xl">
+      
+      {/* Si el administrador le puso imagen, la mostramos de fondo */}
+      {anuncioActivo.imagenUrl && (
+        <img 
+          src={anuncioActivo.imagenUrl} 
+          alt={anuncioActivo.titulo}
+          className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-500" 
+        />
+      )}
+      
+      {/* Texto del anuncio (viene directo desde tu panel de Admin) */}
+      <div className="text-center z-10 p-6 relative">
+        <h2 className="text-3xl md:text-5xl font-black text-white mb-2 uppercase italic transform -skew-x-6 drop-shadow-lg">
+          {anuncioActivo.titulo}
+        </h2>
+        <button className="bg-white text-black font-bold py-2 px-8 rounded-full hover:bg-yellow-500 transition-colors uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.3)] mt-4">
+          Ver Ofertas
+        </button>
+      </div>
+      
+      {/* Efecto de luz de fondo moderno */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/40 via-transparent to-red-900/40 pointer-events-none"></div>
+    </div>
+  </div>
+)}
         <section className="pt-20 pb-16 px-6 flex flex-col items-center justify-center text-center">
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-[0.1em] drop-shadow-2xl">
             SPORT<span className="text-red-600">LIFE</span>
