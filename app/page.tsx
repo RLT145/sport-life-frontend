@@ -15,6 +15,9 @@ export default function Admin() {
   const [precio, setPrecio] = useState('');
   const [talla, setTalla] = useState('');
   const [imagenesGuardar, setImagenesGuardar] = useState([]);
+  const [anuncios, setAnuncios] = useState<any[]>([]);
+  const [tituloAnuncio, setTituloAnuncio] = useState('');
+const [imagenAnuncio, setImagenAnuncio] = useState('');
 
   const cargarDatos = async () => {
     try {
@@ -89,6 +92,50 @@ export default function Admin() {
     cargarDatos();
   };
 
+  // Cargar los anuncios al entrar al panel
+const cargarAnuncios = async () => {
+  try {
+    const res = await fetch('https://sportlife-api-m3yg.onrender.com/anuncios');
+    const data = await res.json();
+    setAnuncios(data);
+  } catch (error) {
+    console.error("Error al cargar anuncios", error);
+  }
+};
+
+// Guardar un anuncio nuevo
+const crearAnuncio = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    await fetch('https://sportlife-api-m3yg.onrender.com/anuncios', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ titulo: tituloAnuncio, imagenUrl: imagenAnuncio })
+    });
+    setTituloAnuncio('');
+    setImagenAnuncio('');
+    cargarAnuncios(); // Recarga la lista para que aparezca
+    alert("¡Anuncio publicado!");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Borrar un anuncio
+const borrarAnuncio = async (id: string) => {
+  if(!confirm("¿Seguro que quieres borrar este anuncio?")) return;
+  try {
+    await fetch(`https://sportlife-api-m3yg.onrender.com/anuncios/${id}`, { method: 'DELETE' });
+    cargarAnuncios(); // Recarga la lista
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Que se carguen solitos al abrir la página
+useEffect(() => {
+  cargarAnuncios();
+}, []);
   return (
     <main className="min-h-screen bg-gray-100 p-8 text-black">
       <div className="max-w-6xl mx-auto space-y-12">
@@ -97,6 +144,58 @@ export default function Admin() {
           <a href="/catalogo" target="_blank" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold shadow transition">Ver Tienda Pública ↗</a>
         </div>
 
+        {/* 📢 SECCIÓN DE ANUNCIOS */}
+<div className="mt-12 bg-zinc-900 p-6 md:p-10 rounded-2xl border border-zinc-800 shadow-2xl">
+  <h2 className="text-2xl font-black text-white mb-6 uppercase tracking-widest border-b border-zinc-800 pb-4">
+    📢 Administrador de Banners
+  </h2>
+  
+  {/* Formulario para crear */}
+  <form onSubmit={crearAnuncio} className="flex flex-col gap-4 mb-10">
+    <input 
+      type="text" 
+      placeholder="Título del anuncio (Ej: 🔥 Gran Remate 30% OFF)" 
+      value={tituloAnuncio}
+      onChange={(e) => setTituloAnuncio(e.target.value)}
+      className="p-4 bg-black text-white border border-zinc-700 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors"
+      required
+    />
+    <input 
+      type="text" 
+      placeholder="URL de la imagen (Opcional - Pega aquí un link de imagen)" 
+      value={imagenAnuncio}
+      onChange={(e) => setImagenAnuncio(e.target.value)}
+      className="p-4 bg-black text-white border border-zinc-700 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors"
+    />
+    <button type="submit" className="bg-white text-black font-bold p-4 rounded-xl hover:bg-yellow-500 transition-colors uppercase tracking-widest mt-2">
+      + Publicar Anuncio
+    </button>
+  </form>
+
+  {/* Lista de anuncios para poder borrarlos */}
+  <h3 className="text-lg font-bold text-zinc-400 mb-4 uppercase">Anuncios Activos:</h3>
+  <div className="flex flex-col gap-4">
+    {anuncios.length === 0 ? (
+      <p className="text-zinc-600 italic">No hay anuncios activos en este momento.</p>
+    ) : (
+      anuncios.map(anuncio => (
+        <div key={anuncio.id} className="flex justify-between items-center bg-black p-4 rounded-xl border border-zinc-800">
+          <div>
+            <p className="text-white font-bold text-lg">{anuncio.titulo}</p>
+            {anuncio.imagenUrl && <p className="text-blue-400 text-xs truncate max-w-xs mt-1">Con imagen adjunta</p>}
+          </div>
+          <button 
+            onClick={() => borrarAnuncio(anuncio.id)}
+            className="bg-red-900/50 text-red-500 hover:text-white hover:bg-red-600 px-6 py-2 rounded-lg font-bold transition-colors"
+          >
+            Eliminar
+          </button>
+        </div>
+      ))
+    )}
+  </div>
+</div>
+        
         {/* Sección Pedidos */}
         <div className="bg-white p-6 rounded-2xl shadow border-t-4 border-blue-600">
           <h2 className="text-xl font-bold mb-4 text-gray-800">📦 Pedidos Recibidos ({ordenes.length})</h2>
