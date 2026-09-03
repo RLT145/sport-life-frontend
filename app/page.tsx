@@ -114,24 +114,6 @@ export default function Admin() {
     console.error(error);
   }
 };
-// Guardar un anuncio nuevo
-  const crearAnuncio = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    await fetch('https://sportlife-api-m3yg.onrender.com/anuncios', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ titulo: tituloAnuncio, imagenUrl: imagenAnuncio })
-    });
-    setTituloAnuncio('');
-    setImagenAnuncio('');
-    cargarAnuncios(); // Recarga la lista para que aparezca
-    alert("¡Anuncio publicado!");
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // Borrar un anuncio
 const borrarAnuncio = async (id: string) => {
   if(!confirm("¿Seguro que quieres borrar este anuncio?")) return;
