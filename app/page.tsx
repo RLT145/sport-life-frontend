@@ -117,10 +117,9 @@ setTituloAnuncio('');
 setArchivoAnuncio(null);
 cargarDatos(); // <--- Aquí estaba el cargarAnuncios()
 alert("¡Anuncio publicado con foto!");
-// ... código ...
   }
 };
-// Borrar un anuncio
+
 const borrarAnuncio = async (id: string) => {
   if(!confirm("¿Seguro que quieres borrar este anuncio?")) return;
   try {
