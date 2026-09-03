@@ -153,8 +153,14 @@ export default function Catalogo() {
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-[0.1em] drop-shadow-2xl">
             SPORT<span className="text-red-600">LIFE</span>
           </h1>
-          <p className="mt-6 text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">VISTIENDO SIEMPRE A LOS MEJORES
-Ropa deportiva, accesorios y mas.</p>
+          <div className="mt-6 flex flex-col items-center justify-center space-y-2 text-center">
+  <span className="text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">
+    VISTIENDO SIEMPRE A LOS MEJORES
+  </span>
+  <span className="text-zinc-500 tracking-[0.2em] text-xs uppercase">
+    Ropa deportiva, accesorios y mas.
+  </span>
+</div>
         </section>
 
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-4">
@@ -165,14 +171,8 @@ Ropa deportiva, accesorios y mas.</p>
             <option value="Hombre">HOMBRE</option>
             <option value="Mujer">MUJER</option>
             <option value="Niños">NIÑOS</option>
-            <option value="Unisex">UNISEX</option>
           </select>
 
-          <select className="bg-black/50 backdrop-blur-md border border-zinc-800 p-4 uppercase text-xs tracking-widest focus:outline-none focus:border-red-600 md:w-64" onChange={(e) => setOrden(e.target.value)}>
-            <option value="defecto">ORDENAR PRECIO...</option>
-            <option value="menor">MENOR A MAYOR</option>
-            <option value="mayor">MAYOR A MENOR</option>
-          </select>
         </div>
 
         <div className="max-w-6xl mx-auto px-6 mt-8 flex gap-3 overflow-x-auto pb-4 scrollbar-hide justify-start md:justify-center">
