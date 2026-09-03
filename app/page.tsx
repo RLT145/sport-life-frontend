@@ -117,22 +117,20 @@ setTituloAnuncio('');
 setArchivoAnuncio(null);
 cargarDatos(); // <--- Aquí estaba el cargarAnuncios()
 alert("¡Anuncio publicado con foto!");
+} catch (error) {
+    console.error(error);
   }
 };
-
 const borrarAnuncio = async (id: string) => {
   if(!confirm("¿Seguro que quieres borrar este anuncio?")) return;
   try {
     await fetch(`https://sportlife-api-m3yg.onrender.com/anuncios/${id}`, { method: 'DELETE' });
-    cargarAnuncios(); // Recarga la lista
+    cargarDatos(); // Recarga la lista
   } catch (error) {
     console.error(error);
   }
 };
 
-// Que se carguen solitos al abrir la página
-useEffect(() => {
-  cargarAnuncios();
 }, []);
   return (
     <main className="min-h-screen bg-gray-100 p-8 text-black">
