@@ -35,6 +35,7 @@ export default function Catalogo() {
     }
   })
   .catch(error => console.error("Error cargando anuncios:", error));
+  }, []);
     })
 
   useEffect(() => { 
