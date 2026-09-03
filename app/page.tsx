@@ -19,13 +19,19 @@ export default function Admin() {
   const [tituloAnuncio, setTituloAnuncio] = useState('');
   const [archivoAnuncio, setArchivoAnuncio] = useState<File | null>(null);
   const cargarDatos = async () => {
-    try {
-      const resP = await fetch('https://sportlife-api-m3yg.onrender.com/productos');
-      setProductos(await resP.json());
-      const resO = await fetch('https://sportlife-api-m3yg.onrender.com/ordenes');
-      setOrdenes(await resO.json());
-    } catch (e) { console.error(e); }
-  };
+  try {
+    const resP = await fetch('https://sportlife-api-m3yg.onrender.com/productos');
+    setProductos(await resP.json());
+
+    const resO = await fetch('https://sportlife-api-m3yg.onrender.com/ordenes');
+    setOrdenes(await resO.json());
+
+    // 👇 AGREGA ESTA LÍNEA AQUÍ ADENTRO:
+    const resA = await fetch('https://sportlife-api-m3yg.onrender.com/anuncios');
+    setAnuncios(await resA.json());
+
+  } catch (e) { console.error(e); }
+};
 
   useEffect(() => { cargarDatos(); }, []);
 
