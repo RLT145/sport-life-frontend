@@ -257,7 +257,6 @@ return (
               <option value="Hombre">Hombre</option>
               <option value="Mujer">Mujer</option>
               <option value="Niños">Niños</option>
-              <option value="Unisex">Unisex</option>
             </select>
 
             <div className="flex gap-2">
