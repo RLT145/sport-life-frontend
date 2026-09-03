@@ -123,7 +123,21 @@ export default function Catalogo() {
           </button>
         </header>
 
-{anuncioActivo && (
+
+        <section className="pt-20 pb-16 px-6 flex flex-col items-center justify-center text-center">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-[0.1em] drop-shadow-2xl">
+            SPORT<span className="text-red-600">LIFE</span>
+          </h1>
+          <div className="mt-6 flex flex-col items-center justify-center space-y-2 text-center">
+  <span className="text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">
+    VISTIENDO SIEMPRE A LOS MEJORES
+  </span>
+  <span className="text-zinc-500 tracking-[0.2em] text-xs uppercase">
+    Ropa deportiva, accesorios y mas.
+  </span>
+</div>
+        </section>
+        {anuncioActivo && (
   <div className="w-full max-w-7xl mx-auto px-4 mb-10 mt-4 animate-fade-in">
     <div className="w-full h-48 md:h-80 bg-zinc-900 rounded-2xl overflow-hidden relative border border-zinc-800 flex items-center justify-center group shadow-2xl">
       
@@ -149,19 +163,6 @@ export default function Catalogo() {
     </div>
   </div>
 )}
-        <section className="pt-20 pb-16 px-6 flex flex-col items-center justify-center text-center">
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-[0.1em] drop-shadow-2xl">
-            SPORT<span className="text-red-600">LIFE</span>
-          </h1>
-          <div className="mt-6 flex flex-col items-center justify-center space-y-2 text-center">
-  <span className="text-zinc-400 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">
-    VISTIENDO SIEMPRE A LOS MEJORES
-  </span>
-  <span className="text-zinc-500 tracking-[0.2em] text-xs uppercase">
-    Ropa deportiva, accesorios y mas.
-  </span>
-</div>
-        </section>
 
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-4">
           <input placeholder="BUSCAR ARTÍCULO..." className="bg-black/50 backdrop-blur-md border border-zinc-800 w-full p-4 text-sm uppercase tracking-widest focus:outline-none focus:border-red-600" onChange={(e) => setBusqueda(e.target.value)} />
