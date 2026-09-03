@@ -17,8 +17,7 @@ export default function Admin() {
   const [imagenesGuardar, setImagenesGuardar] = useState([]);
   const [anuncios, setAnuncios] = useState<any[]>([]);
   const [tituloAnuncio, setTituloAnuncio] = useState('');
-const [imagenAnuncio, setImagenAnuncio] = useState('');
-
+  const [archivoAnuncio, setArchivoAnuncio] = useState<File | null>(null);
   const cargarDatos = async () => {
     try {
       const resP = await fetch('https://sportlife-api-m3yg.onrender.com/productos');
@@ -92,19 +91,31 @@ const [imagenAnuncio, setImagenAnuncio] = useState('');
     cargarDatos();
   };
 
-  // Cargar los anuncios al entrar al panel
-const cargarAnuncios = async () => {
+  const crearAnuncio = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  // Usamos FormData para poder mandar la imagen física
+  const formData = new FormData();
+  formData.append('titulo', tituloAnuncio);
+  if (archivoAnuncio) {
+    formData.append('imagen', archivoAnuncio); // 'imagen' es el nombre del archivo
+  }
+
   try {
-    const res = await fetch('https://sportlife-api-m3yg.onrender.com/anuncios');
-    const data = await res.json();
-    setAnuncios(data);
+    await fetch('https://sportlife-api-m3yg.onrender.com/anuncios', {
+      method: 'POST',
+      body: formData // Ya no lleva headers, el navegador los pone solos
+    });
+    setTituloAnuncio('');
+    setArchivoAnuncio(null);
+    cargarAnuncios(); 
+    alert("¡Anuncio publicado con foto!");
   } catch (error) {
-    console.error("Error al cargar anuncios", error);
+    console.error(error);
   }
 };
-
 // Guardar un anuncio nuevo
-const crearAnuncio = async (e: React.FormEvent) => {
+  const crearAnuncio = async (e: React.FormEvent) => {
   e.preventDefault();
   try {
     await fetch('https://sportlife-api-m3yg.onrender.com/anuncios', {
@@ -161,12 +172,11 @@ useEffect(() => {
       required
     />
     <input 
-      type="text" 
-      placeholder="URL de la imagen (Opcional - Pega aquí un link de imagen)" 
-      value={imagenAnuncio}
-      onChange={(e) => setImagenAnuncio(e.target.value)}
-      className="p-4 bg-black text-white border border-zinc-700 rounded-xl focus:border-yellow-500 focus:outline-none transition-colors"
-    />
+  type="file" 
+  accept="image/*"
+  onChange={(e) => setArchivoAnuncio(e.target.files?.[0] || null)}
+  className="p-4 bg-black text-white border border-zinc-700 rounded-xl focus:border-yellow-500 transition-colors"
+/>
     <button type="submit" className="bg-white text-black font-bold p-4 rounded-xl hover:bg-yellow-500 transition-colors uppercase tracking-widest mt-2">
       + Publicar Anuncio
     </button>
