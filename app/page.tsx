@@ -130,9 +130,8 @@ const borrarAnuncio = async (id: string) => {
     console.error(error);
   }
 };
-
-}, []);
-  return (
+  
+return (
     <main className="min-h-screen bg-gray-100 p-8 text-black">
       <div className="max-w-6xl mx-auto space-y-12">
         <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow">
