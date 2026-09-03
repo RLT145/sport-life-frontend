@@ -9,7 +9,7 @@ export default function Catalogo() {
   const [orden, setOrden] = useState('defecto');
   const [generoFiltro, setGeneroFiltro] = useState('TODOS');
   const [categoriaFiltro, setCategoriaFiltro] = useState('TODAS');
-  
+  const [anuncioActivo, setAnuncioActivo] = useState<any>(null);
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
@@ -26,16 +26,16 @@ export default function Catalogo() {
     const g = localStorage.getItem('carrito');
     if (g) setCarrito(JSON.parse(g));
 
-    fetch('https://sportlife-api-m3yg.onrender.com/anuncios')
-    .then(res => res.json())
-    .then(data => {
-      // Si hay anuncios en la base de datos, guardamos el más reciente (el primero)
-      if (data && data.length > 0) {
-        setAnuncioActivo(data[0]);
-      }
+   fetch('https://sportlife-api-m3yg.onrender.com/anuncios')
+  .then(res => res.json())
+  .then(data => {
+    // Si hay anuncios, guardamos el primero para mostrarlo
+    if (data && data.length > 0) {
+      setAnuncioActivo(data[0]);
+    }
+  })
+  .catch(error => console.error("Error cargando anuncios:", error));
     })
-    .catch(error => console.error("Error cargando anuncios:", error));
-  }, []);
 
   useEffect(() => { 
     if (montado) localStorage.setItem('carrito', JSON.stringify(carrito)); 
