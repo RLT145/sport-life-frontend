@@ -36,7 +36,6 @@ export default function Catalogo() {
   })
   .catch(error => console.error("Error cargando anuncios:", error));
   }, []);
-    })
 
   useEffect(() => { 
     if (montado) localStorage.setItem('carrito', JSON.stringify(carrito)); 
