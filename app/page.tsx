@@ -112,12 +112,12 @@ export default function Admin() {
       method: 'POST',
       body: formData // Ya no lleva headers, el navegador los pone solos
     });
-    setTituloAnuncio('');
-    setArchivoAnuncio(null);
-    cargarAnuncios(); 
-    alert("¡Anuncio publicado con foto!");
-  } catch (error) {
-    console.error(error);
+    // ... código ...
+setTituloAnuncio('');
+setArchivoAnuncio(null);
+cargarDatos(); // <--- Aquí estaba el cargarAnuncios()
+alert("¡Anuncio publicado con foto!");
+// ... código ...
   }
 };
 // Borrar un anuncio
