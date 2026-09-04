@@ -18,6 +18,7 @@ export default function Catalogo() {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
+  const [indiceAnuncio, setIndiceAnuncio] = useState(0);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -36,6 +37,16 @@ export default function Catalogo() {
   })
   .catch(error => console.error("Error cargando anuncios:", error));
   }, []);
+
+  // Cambiar el anuncio automáticamente cada 5 segundos
+useEffect(() => {
+  if (listaAnuncios && listaAnuncios.length > 1) {
+    const intervalo = setInterval(() => {
+      setIndiceAnuncio((prev) => (prev + 1) % listaAnuncios.length);
+    }, 5000);
+    return () => clearInterval(intervalo); // Limpia el reloj si cambias de página
+  }
+}, [listaAnuncios]);
 
   useEffect(() => { 
     if (montado) localStorage.setItem('carrito', JSON.stringify(carrito)); 
@@ -137,33 +148,51 @@ export default function Catalogo() {
   </span>
 </div>
         </section>
-        {/* 📢 CARRUSEL DE ANUNCIOS PREMIUM */}
+        {/* 📢 CARRUSEL AUTOMÁTICO Y MANUAL */}
 {listaAnuncios && listaAnuncios.length > 0 && (
-  <div className="w-full max-w-7xl mx-auto px-4 mb-12 mt-6 animate-fade-in">
-    <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6" style={{ scrollbarWidth: 'none' }}>
+  <div className="w-full max-w-7xl mx-auto px-4 mb-12 mt-6 animate-fade-in flex justify-center">
+    
+    {/* Contenedor más grande y perfectamente centrado */}
+    <div className="w-full md:w-[95%] h-[300px] md:h-[500px] relative bg-black rounded-3xl overflow-hidden border border-zinc-800 shadow-[0_0_30px_rgba(0,0,0,0.8)] group">
       
-      {listaAnuncios.map((anuncio, index) => (
-        anuncio.imagenUrl && (
-          /* Ajustamos el ancho para que en compu se vea un pedacito de la siguiente foto y el usuario sepa que puede deslizar */
-          <div key={index} className="w-full md:w-[85%] flex-none snap-center group cursor-pointer">
-            
-            {/* Contenedor Glassmorphism Minimalista y Alto Contraste */}
-            <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-black/40 backdrop-blur-lg rounded-3xl overflow-hidden relative border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-all duration-700 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] group-hover:border-white/30">
-              
-              {/* Imagen con zoom suave */}
-              <img 
-                src={anuncio.imagenUrl} 
-                alt={`Promoción ${index + 1}`}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
+      {/* Imagen actual */}
+      <img 
+        src={listaAnuncios[indiceAnuncio]?.imagenUrl} 
+        alt={`Promoción ${indiceAnuncio + 1}`}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out" 
+      />
+
+      {/* 🎛️ CONTROLES (Solo aparecen si hay más de 1 imagen) */}
+      {listaAnuncios.length > 1 && (
+        <>
+          {/* Botón Izquierda */}
+          <button 
+            onClick={() => setIndiceAnuncio((prev) => prev === 0 ? listaAnuncios.length - 1 : prev - 1)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 backdrop-blur-md text-white w-12 h-12 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black border border-white/20"
+          >
+            &#10094;
+          </button>
+          
+          {/* Botón Derecha */}
+          <button 
+            onClick={() => setIndiceAnuncio((prev) => (prev + 1) % listaAnuncios.length)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 backdrop-blur-md text-white w-12 h-12 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black border border-white/20"
+          >
+            &#10095;
+          </button>
+
+          {/* Puntitos indicadores abajo */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+            {listaAnuncios.map((_, i) => (
+              <button 
+                key={i} 
+                onClick={() => setIndiceAnuncio(i)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${i === indiceAnuncio ? 'bg-white scale-125 shadow-[0_0_10px_white]' : 'bg-white/40 hover:bg-white/70'}`}
               />
-              
-              {/* Sombra interna sutil para dar profundidad 3D */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-            </div>
-            
+            ))}
           </div>
-        )
-      ))}
+        </>
+      )}
 
     </div>
   </div>
