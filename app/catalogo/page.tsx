@@ -137,23 +137,30 @@ export default function Catalogo() {
   </span>
 </div>
         </section>
-        {/* 📢 CARRUSEL DE ANUNCIOS (Solo imágenes) */}
+        {/* 📢 CARRUSEL DE ANUNCIOS PREMIUM */}
 {listaAnuncios && listaAnuncios.length > 0 && (
-  <div className="w-full max-w-7xl mx-auto px-4 mb-10 mt-4 animate-fade-in">
-    {/* Contenedor deslizable (scroll horizontal) */}
-    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4" style={{ scrollbarWidth: 'none' }}>
+  <div className="w-full max-w-7xl mx-auto px-4 mb-12 mt-6 animate-fade-in">
+    <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6" style={{ scrollbarWidth: 'none' }}>
       
-      {/* Dibujamos todas las imágenes una al lado de la otra */}
       {listaAnuncios.map((anuncio, index) => (
         anuncio.imagenUrl && (
-          <div key={index} className="w-full flex-none snap-center">
-            <div className="w-full h-48 md:h-80 bg-zinc-900 rounded-2xl overflow-hidden relative shadow-2xl">
+          /* Ajustamos el ancho para que en compu se vea un pedacito de la siguiente foto y el usuario sepa que puede deslizar */
+          <div key={index} className="w-full md:w-[85%] flex-none snap-center group cursor-pointer">
+            
+            {/* Contenedor Glassmorphism Minimalista y Alto Contraste */}
+            <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-black/40 backdrop-blur-lg rounded-3xl overflow-hidden relative border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] transition-all duration-700 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] group-hover:border-white/30">
+              
+              {/* Imagen con zoom suave */}
               <img 
                 src={anuncio.imagenUrl} 
-                alt={`Oferta ${index + 1}`}
-                className="absolute inset-0 w-full h-full object-cover" 
+                alt={`Promoción ${index + 1}`}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
               />
+              
+              {/* Sombra interna sutil para dar profundidad 3D */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
             </div>
+            
           </div>
         )
       ))}
