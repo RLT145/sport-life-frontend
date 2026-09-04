@@ -9,7 +9,7 @@ export default function Catalogo() {
   const [orden, setOrden] = useState('defecto');
   const [generoFiltro, setGeneroFiltro] = useState('TODOS');
   const [categoriaFiltro, setCategoriaFiltro] = useState('TODAS');
-  const [anuncioActivo, setAnuncioActivo] = useState<any>(null);
+  const [listaAnuncios, setListaAnuncios] = useState<any[]>([]);
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
@@ -26,12 +26,12 @@ export default function Catalogo() {
     const g = localStorage.getItem('carrito');
     if (g) setCarrito(JSON.parse(g));
 
-   fetch('https://sportlife-api-m3yg.onrender.com/anuncios')
+  fetch('https://sportlife-api-m3yg.onrender.com/anuncios')
   .then(res => res.json())
   .then(data => {
-    // Si hay anuncios, guardamos el primero para mostrarlo
     if (data && data.length > 0) {
-      setAnuncioActivo(data[0]);
+      // Ahora guardamos la lista completa de imágenes
+      setListaAnuncios(data);
     }
   })
   .catch(error => console.error("Error cargando anuncios:", error));
@@ -137,29 +137,27 @@ export default function Catalogo() {
   </span>
 </div>
         </section>
-        {anuncioActivo && (
+        {/* 📢 CARRUSEL DE ANUNCIOS (Solo imágenes) */}
+{listaAnuncios && listaAnuncios.length > 0 && (
   <div className="w-full max-w-7xl mx-auto px-4 mb-10 mt-4 animate-fade-in">
-    <div className="w-full h-48 md:h-80 bg-zinc-900 rounded-2xl overflow-hidden relative border border-zinc-800 flex items-center justify-center group shadow-2xl">
+    {/* Contenedor deslizable (scroll horizontal) */}
+    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4" style={{ scrollbarWidth: 'none' }}>
       
-     {anuncioActivo?.imagenUrl && (
-  <img 
-    src={anuncioActivo.imagenUrl} 
-    alt={anuncioActivo.titulo}
-    className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-500" 
-  />
-)}
-      
-  
-      <div className="text-center z-10 p-6 relative">
-        <h2 className="text-3xl md:text-5xl font-black text-white mb-2 uppercase italic transform -skew-x-6 drop-shadow-lg">
-          {anuncioActivo.titulo}
-        </h2>
-        <button className="bg-white text-black font-bold py-2 px-8 rounded-full hover:bg-yellow-500 transition-colors uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.3)] mt-4">
-          Ver Ofertas
-        </button>
-      </div>
-      
-      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/40 via-transparent to-red-900/40 pointer-events-none"></div>
+      {/* Dibujamos todas las imágenes una al lado de la otra */}
+      {listaAnuncios.map((anuncio, index) => (
+        anuncio.imagenUrl && (
+          <div key={index} className="w-full flex-none snap-center">
+            <div className="w-full h-48 md:h-80 bg-zinc-900 rounded-2xl overflow-hidden relative shadow-2xl">
+              <img 
+                src={anuncio.imagenUrl} 
+                alt={`Oferta ${index + 1}`}
+                className="absolute inset-0 w-full h-full object-cover" 
+              />
+            </div>
+          </div>
+        )
+      ))}
+
     </div>
   </div>
 )}
